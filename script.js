@@ -50,7 +50,7 @@ L.polyline(londonParisRomeBerlinBucarest, {color: 'red'}).addTo(map);
 map.fitBounds(londonParisRomeBerlinBucarest);
 
 marker2.on('end', function() {
-    marker2.bindPopup('<b>Welcome to Bucarest !</b>', {closeOnClick: false})
+    marker2.bindPopup('<b>Welcome to Bucarest !</b><br>GitHub Page: <a target="\\blanck" href="https://github.com/ewoken/Leaflet.MovingMarker"><img src="github.png"></a>', {closeOnClick: false})
     .openPopup();
 });
 
