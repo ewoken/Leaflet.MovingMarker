@@ -36,8 +36,7 @@ Add this line to your HTML file:
 Then add your first MovingMarker:
 
 ```javascript
-var myMovingMarker = L.movingMarker([[45.19147011,5.71453741], [45.36400762,5.59491637], 
-    [45.56023084,5.44955125], [45.58396938,5.27334626], [45.62760423,5.15075329], [45.76059047,4.85944146]], [9600, 16800, 5400, 4800, 12600]).addTo(map);
+var myMovingMarker = L.Marker.movingMarker([[48.8567, 2.3508], [50.45, 30.523333]], [20000]).addTo(map);
 //...
 myMovingMarker.start();
 ```
@@ -49,6 +48,9 @@ API
 ```
 L.movingMarker(<LatLng[]> latlngs, <Number[]> durations [,<Object> options]);
 ```
+
+**durations**: Array of duration in ms.
+
 Note: As Leaftlet's other functions, it also accept them in a simple Array form and simple object form ([see Leaflet docs](http://leafletjs.com/reference.html#latlng)).
 
 **Options**
