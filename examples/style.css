@@ -1,0 +1,23 @@
+
+
+
+#map {
+	height: 100%;
+}
+
+h1 {
+	display: none;
+}
+
+html, body {
+	height: 100%;
+	margin: 0px;	
+}
+
+main {
+	height: 100%;
+}
+
+section {
+	height: 100%;
+}
