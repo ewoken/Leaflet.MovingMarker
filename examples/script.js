@@ -39,13 +39,11 @@ marker1.once('click', function () {
     }, 2000);
 });
 
-
-
 marker1.bindPopup('<b>Click me to start !</b>', {closeOnClick: false});
 marker1.openPopup();
 
 var marker2 = L.Marker.movingMarker(londonParisRomeBerlinBucarest,
-    [3000, 2000, 5000, 3000], {autostart: true}).addTo(map);
+    [3000, 9000, 9000, 3000], {autostart: true, loop: true}).addTo(map);
 L.polyline(londonParisRomeBerlinBucarest, {color: 'red'}).addTo(map);
 map.fitBounds(londonParisRomeBerlinBucarest);
 
@@ -54,9 +52,5 @@ marker2.on('end', function() {
     .openPopup();
 });
 
-/*
-a.on('end', function() {
-    a.start();
-});*/
-
+marker2.addStation(2, 3000);
 
