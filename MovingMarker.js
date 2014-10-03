@@ -200,11 +200,6 @@ L.Marker.MovingMarker = L.Marker.extend({
             elapsedTime);
         this.setLatLng(p);
 
-        if ( ! this._map.getBounds().contains(p) && ! this._test) {
-            this._test = true;
-            console.log(this._currentDuration - (timestamp - this._startTimeStamp));
-        }
-
         if (! noRequestAnim) {
             this._animId = L.Util.requestAnimFrame(this._animate, this, false);
             this._animRequested = true;
@@ -247,14 +242,16 @@ L.Marker.MovingMarker = L.Marker.extend({
             return;
         }
 
-        if (typeof(elapsedTime) === 'undefined') {
-            elapsedTime = 0;
-        }
-
         this._stopAnimation();
-        // force animation to place the marker at the right place
-        this._animate(this._startTimeStamp
-            + (this._pauseStartTime - this._startTime), true);
+
+        if (typeof(elapsedTime) === 'undefined') {
+            //user call
+            elapsedTime = 0;
+            // force animation to place the marker at the right place
+            this._animate(this._startTimeStamp
+                + (Date.now() - this._startTime), true);
+        }
+        
         this._state = L.Marker.MovingMarker.endedState;
         this.fire('end', {elapsedTime: elapsedTime});
     }
