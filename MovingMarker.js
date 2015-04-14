@@ -18,9 +18,11 @@ L.Marker.MovingMarker = L.Marker.extend({
     options: {
         autostart: false,
         loop: false,
+        speed: 1
     },
 
     initialize: function (latlngs, durations, options) {
+        options = options || {};
         L.Marker.prototype.initialize.call(this, latlngs[0], options);
 
         this._latlngs = latlngs.map(function(e, index) {    
@@ -28,7 +30,7 @@ L.Marker.MovingMarker = L.Marker.extend({
         });
 
         this._durations = durations;
-        this._speed = 1;
+        this._speed = options.speed || 1;
         Object.defineProperty(this, '_currentDuration', {
             set: function(duration) {
                 this.__currentDuration = duration;
