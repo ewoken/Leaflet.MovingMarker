@@ -82,6 +82,7 @@ All the marker's options are available.
  - ```start()```:  the marker begins its path or resumes if it is paused.
  - ``` stop()```: manually stops the marker, if you call ```start`` after, the marker starts again the polyline at the beginning.
  - ```pause()```: just pauses the marker
+ - ```setSpeed(number)```: the marker will move the multiple fast, i.e. `setSpeed(2)` is the double speed
  - ``` resume()```: the marker resumes its animation
  - ```addLatLng(latlng, duration)```: adds a point to the polyline. Useful, if we have to set the path one by one.
  - ``` moveTo(latlng, duration)```: stops current animation and make the marker move to ```latlng``` in ```duration``` ms. 
