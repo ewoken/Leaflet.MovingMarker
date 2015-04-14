@@ -28,6 +28,15 @@ L.Marker.MovingMarker = L.Marker.extend({
         });
 
         this._durations = durations;
+        this._speed = 1;
+        Object.defineProperty(this, '_currentDuration', {
+            set: function(duration) {
+                this.__currentDuration = duration;
+            },
+            get: function() {
+                return this.__currentDuration / this._speed;
+            }
+        });
         this._currentDuration = 0;
         this._currentIndex = 0;
 
@@ -75,9 +84,23 @@ L.Marker.MovingMarker = L.Marker.extend({
             return;
         }
         // update the current line
-        this._currentLine[0] = this.getLatLng(); 
-        this._currentDuration -= (this._pauseStartTime - this._startTime);
         this._startAnimation();
+    },
+
+    setSpeed: function(speed) {
+        if (! this.isPaused()) {
+            this._stopAnimation();
+            var speedChangeTime = Date.now();
+
+            this._currentLine[0] = this.getLatLng();
+            this._currentDuration = (this._currentDuration - (speedChangeTime - this._startTime))*this._speed;
+
+            this._speed = speed;
+
+            this._startAnimation();
+        } else {
+            this._speed = speed;
+        }
     },
 
     addLatLng: function(latlng, duration) {
@@ -235,6 +258,9 @@ L.Marker.MovingMarker = L.Marker.extend({
         //force animation to place the marker at the right place
         this._animate(this._startTimeStamp
             + (this._pauseStartTime - this._startTime), true);
+
+        this._currentLine[0] = this.getLatLng();        
+        this._currentDuration = (this._currentDuration - (this._pauseStartTime - this._startTime))*this._speed;
     },
 
     stop: function(elapsedTime) {

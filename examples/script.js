@@ -48,8 +48,11 @@ marker1.openPopup();
 //========================================================================
 
 var marker2 = L.Marker.movingMarker(londonParisRomeBerlinBucarest,
-    [3000, 9000, 9000, 4000], {autostart: true}).addTo(map);
+    [3000, 9000, 9000, 8000], {autostart: true}).addTo(map);
 L.polyline(londonParisRomeBerlinBucarest, {color: 'red'}).addTo(map);
+setTimeout(function() {
+    marker2.setSpeed(2);
+},23000)
 
 
 marker2.on('end', function() {
@@ -94,5 +97,26 @@ marker3.on('loop', function(e) {
 map.on("click", function(e) {
     marker4.moveTo(e.latlng, 2000);
 });
+
+
+var marker5 = L.Marker.movingMarker([[50.85, 4.35], [50.45, 30.523333], [50.85, 4.35]], [12000, 12000]).addTo(map);
+
+var start = Date.now();
+marker5.start();
+setTimeout(function() {
+    marker5.pause();
+}, 6000)
+setTimeout(function() {
+    marker5.setSpeed(2);
+}, 9000)
+setTimeout(function() {
+    marker5.resume();
+}, 12000)
+setTimeout(function() {
+    marker5.setSpeed(1);
+}, 18000)
+marker5.on('end', function() {
+    console.log('Approx 24s: ', Date.now() - start); // approx 24000
+})
 
 //=========================================================================
