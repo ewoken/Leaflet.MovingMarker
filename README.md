@@ -53,7 +53,10 @@ API
 L.movingMarker(<LatLng[]> latlngs, <Number[]> durations [,<Object> options]);
 ```
 
-**durations**: Array of duration in ms.
+**durations**:
+*   if array of number : duration in ms per line segment.
+*   if number : total duration (autocalculate duration in ms per line segment).
+
 
 Note: As Leaftlet's other functions, it also accept them in a simple Array form and simple object form ([see Leaflet docs](http://leafletjs.com/reference.html#latlng)).
 
