@@ -218,6 +218,14 @@ L.Marker.MovingMarker = L.Marker.extend({
             self.resume();
         });
 
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                self.pause();
+            } else {
+                self.resume();
+            }
+        }, false);
+
         if (this.options.autostart && (! this.isStarted())) {
             this.start();
             return;
