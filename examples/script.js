@@ -102,5 +102,5 @@ map.on("click", function(e) {
 
 //=========================================================================
 
-var marker6 = L.Marker.movingMarker(barceloneParisMonaco, [5000,5000], {autostart: true, reverse:true}).addTo(map);
+var marker6 = L.Marker.movingMarker(barceloneParisMonaco, [5000,5000], {autostart: true, reverse:true, waitingReverse:5000}).addTo(map);
 L.polyline(barceloneParisMonaco, {color: 'green'}).addTo(map);

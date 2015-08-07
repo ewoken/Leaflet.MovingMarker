@@ -63,7 +63,8 @@ All the marker's options are available.
  - ```autostart```: if ``` true``` the marker will start automatically after it is added to map. Default: ```false```
  - ``` loop```: if ```true``` the marker will start automatically at the beginning of the polyline when the it arrives at the end. Default: ```false```
  - ```reverse```: if ```true``` the marker will restart automatically in reverse path when it arrives at the end. Default ```false```
-	
+ - ```waitingReverse```: delay in ms before the marker moves in reverse. Default : not waiting
+
 **Methods**
 
 *Getter*
@@ -80,20 +81,20 @@ All the marker's options are available.
 *Setter*
 
  - ```start()```:  the marker begins its path or resumes if it is paused.
- - ``` stop()```: manually stops the marker, if you call ```start`` after, the marker starts again the polyline at the beginning.
+ - ```stop()```: manually stops the marker, if you call ```start`` after, the marker starts again the polyline at the beginning.
  - ```pause()```: just pauses the marker
- - ``` resume()```: the marker resumes its animation
+ - ```resume()```: the marker resumes its animation
  - ```addLatLng(latlng, duration)```: adds a point to the polyline. Useful, if we have to set the path one by one.
- - ``` moveTo(latlng, duration)```: stops current animation and make the marker move to ```latlng``` in ```duration``` ms. 
+ - ```moveTo(latlng, duration)```: stops current animation and make the marker move to ```latlng``` in ```duration``` ms.
  - ```addStation(pointIndex, duration)```: the marker will stop at the ```pointIndex```th points of the polyline during ```duration``` ms. You can't add a station at the first or last point of the polyline.
  
 *Events*
 
  - ```start```: fired when the marker starts
- - ``` end```: fired when the marker stops 
+ - ```end```: fired when the marker stops
  - ```loop```: fired when the marker begin a new loop
- - ```reverse```: fired when the marker begin a reverse path
- 
+ - ```reverse```: fired when the marker begin a reverse path (When waitingReverse != 0, start and end fired)
+
 **Note**: Event are not synchrone because of the use of ```requestAnimationFrame```.  If you quit the tab where the animation is working, events will be fired when the tab will get back the focus. Events ```end``` and ```loop``` have the attribute ```elapsedTime``` to get the time elapsed since the real end/loop.
 
 How it works
