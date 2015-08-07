@@ -6,7 +6,7 @@ var map = new L.Map('map', {
 
 // create a new tile layer
 var tileUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-layer = new L.TileLayer(tileUrl, 
+layer = new L.TileLayer(tileUrl,
 {
     attribution: 'Maps © <a href=\"www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors',
     maxZoom: 18
@@ -16,10 +16,15 @@ layer = new L.TileLayer(tileUrl,
 map.addLayer(layer);
 
 var parisKievLL = [[48.8567, 2.3508], [50.45, 30.523333]];
-var londonParisRomeBerlinBucarest = [[51.507222, -0.1275], [48.8567, 2.3508], 
+var londonParisRomeBerlinBucarest = [[51.507222, -0.1275], [48.8567, 2.3508],
 [41.9, 12.5], [52.516667, 13.383333], [44.4166,26.1]];
 var londonBrusselFrankfurtAmsterdamLondon = [[51.507222, -0.1275], [50.85, 4.35],
 [50.116667, 8.683333], [52.366667, 4.9], [51.507222, -0.1275]];
+var barceloneParisMonaco = [
+    [41.385064, 2.173403],
+    [48.8567, 2.3508],
+    [43.738418, 7.424616]
+];
 
 map.fitBounds(londonParisRomeBerlinBucarest);
 
@@ -71,7 +76,7 @@ var marker4 = L.Marker.movingMarker([[45.816667, 15.983333]], []).addTo(map);
 
 marker3.on('loop', function(e) {
     marker3.loops++;
-    if (e.elapsedTime < 50) {   
+    if (e.elapsedTime < 50) {
         marker3.getPopup().setContent("<b>Loop: " + marker3.loops + "</b>")
         marker3.openPopup();
         setTimeout(function() {
@@ -82,11 +87,11 @@ marker3.on('loop', function(e) {
             } else {
                 if (marker4.getLatLng().equals([45.816667, 15.983333])) {
                     marker4.bindPopup('Click on the map to move me !');
-                    marker4.openPopup(); 
+                    marker4.openPopup();
                 }
-                
+
             }
-            
+
         }, 2000);
     }
 });
@@ -96,3 +101,6 @@ map.on("click", function(e) {
 });
 
 //=========================================================================
+
+var marker6 = L.Marker.movingMarker(barceloneParisMonaco, [5000,5000], {autostart: true, reverse:true}).addTo(map);
+L.polyline(barceloneParisMonaco, {color: 'green'}).addTo(map);
