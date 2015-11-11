@@ -1,18 +1,25 @@
 {
   "name": "Leaflet.MovingMarker",
-  "version": "0.5.0",
-  "main": "MovingMarker.js",
+  "description": "A Leaflet plug-in to create moving marker",
+  "main": [
+    "MovingMarker.js"
+    ],
+  "dependencies": {
+      "leaflet": "~0.7.2"
+  },
+  "devDependencies": {
+  },
+  "license": "MIT",
   "ignore": [
+    "example"
+    "LICENSE"
     ".jshintrc",
     "**/*.txt",
     ".gitignore",
     ".jshintignore",
     ".jshintrc",
+    "*.md"
+    ".gitattributes"
     "bower.json"
-  ],
-  "dependencies": {
-      "leaflet": "~0.7.2"
-  },
-  "devDependencies": {
-  }
+  ]
 }
