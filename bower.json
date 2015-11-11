@@ -5,20 +5,20 @@
     "MovingMarker.js"
     ],
   "dependencies": {
-      "leaflet": "~0.7.2"
+    "leaflet": "~0.7.2"
   },
   "devDependencies": {
   },
   "license": "MIT",
   "ignore": [
-    "example"
-    "LICENSE"
+    "example",
+    "LICENSE",
     ".jshintrc",
     "**/*.txt",
     ".gitignore",
     ".jshintignore",
     ".jshintrc",
-    "*.md"
+    "*.md",
     ".gitattributes"
     "bower.json"
   ]
