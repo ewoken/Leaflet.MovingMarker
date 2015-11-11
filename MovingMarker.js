@@ -27,7 +27,12 @@ L.Marker.MovingMarker = L.Marker.extend({
             return L.latLng(e);
         });
 
-        this._durations = durations;
+        if (durations instanceof Array) {
+            this._durations = durations;
+        } else {
+            this._durations = this._createDurations(this._latlngs, durations);
+        }
+
         this._currentDuration = 0;
         this._currentIndex = 0;
 
@@ -101,6 +106,27 @@ L.Marker.MovingMarker = L.Marker.extend({
         var t = this._latlngs[pointIndex];
         this._latlngs.splice(pointIndex + 1, 0, t);
         this._durations.splice(pointIndex, 0, duration);
+    },
+
+    _createDurations: function (latlngs, duration) {
+        var lastIndex = latlngs.length - 1;
+        var distances = [];
+        var totalDistance = 0;
+        var distance = 0;
+        for (var i = 0; i < lastIndex; i++) {
+            distance = latlngs[i + 1].distanceTo(latlngs[i]);
+            distances.push(distance);
+            totalDistance += distance;
+        }
+
+        var ratioDuration = duration / totalDistance;
+
+        var durations = [];
+        for (i = 0; i < distances.length; i++) {
+            durations.push(distances[i] * ratioDuration);
+        }
+
+        return durations;
     },
 
     _startAnimation: function() {

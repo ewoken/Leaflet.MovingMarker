@@ -20,6 +20,12 @@ var londonParisRomeBerlinBucarest = [[51.507222, -0.1275], [48.8567, 2.3508],
 [41.9, 12.5], [52.516667, 13.383333], [44.4166,26.1]];
 var londonBrusselFrankfurtAmsterdamLondon = [[51.507222, -0.1275], [50.85, 4.35],
 [50.116667, 8.683333], [52.366667, 4.9], [51.507222, -0.1275]];
+var barceloneParisMonaco = [
+    [41.385064, 2.173403],
+    [48.8567, 2.3508],
+    [43.738418, 7.424616]
+];
+
 
 map.fitBounds(londonParisRomeBerlinBucarest);
 
@@ -96,3 +102,6 @@ map.on("click", function(e) {
 });
 
 //=========================================================================
+
+var marker5 = L.Marker.movingMarker(barceloneParisMonaco, 10000, {autostart: true}).addTo(map);
+L.polyline(barceloneParisMonaco, {color: 'green'}).addTo(map);
