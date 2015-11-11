@@ -19,7 +19,7 @@
     ".jshintignore",
     ".jshintrc",
     "*.md",
-    ".gitattributes"
+    ".gitattributes",
     "bower.json"
   ]
 }
