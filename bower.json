@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "ignore": [
-    "example",
+    "examples",
     "LICENSE",
     ".jshintrc",
     "**/*.txt",
