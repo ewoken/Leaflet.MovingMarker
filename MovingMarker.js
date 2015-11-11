@@ -235,6 +235,23 @@ L.Marker.MovingMarker = L.Marker.extend({
     onAdd: function (map) {
         L.Marker.prototype.onAdd.call(this, map);
 
+        var self = this;
+        map.on("zoomstart", function () {
+            self.pause();
+        });
+
+        map.on("zoomend", function () {
+            self.resume();
+        });
+
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                self.pause();
+            } else {
+                self.resume();
+            }
+        }, false);
+
         if (this.options.autostart && (! this.isStarted())) {
             this.start();
             return;
