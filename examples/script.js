@@ -109,5 +109,11 @@ map.on("click", function(e) {
 var marker5 = L.Marker.movingMarker(
     barcelonePerpignanPauBordeauxMarseilleMonaco,
     10000, {autostart: true}).addTo(map);
+
+marker5.addStation(1, 2000);
+marker5.addStation(2, 2000);
+marker5.addStation(3, 2000);
+marker5.addStation(4, 2000);
+
 L.polyline(barcelonePerpignanPauBordeauxMarseilleMonaco,
     {color: 'green'}).addTo(map);
