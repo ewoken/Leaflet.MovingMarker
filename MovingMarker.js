@@ -27,6 +27,8 @@ L.Marker.MovingMarker = L.Marker.extend({
         this._latlngs = latlngs.map(function(e, index) {
             return L.latLng(e);
         });
+        
+        this._angles = [this.options.rotationAngle];
 
         if (durations instanceof Array) {
             this._durations = durations;
@@ -115,14 +117,16 @@ L.Marker.MovingMarker = L.Marker.extend({
         this.fire('end', {elapsedTime: elapsedTime});
     },
 
-    addLatLng: function(latlng, duration) {
+    addLatLng: function(latlng, angle, duration) {
         this._latlngs.push(L.latLng(latlng));
+        this._angles.push(angle);
         this._durations.push(duration);
     },
 
-    moveTo: function(latlng, duration) {
+    moveTo: function(latlng, angle, duration) {
         this._stopAnimation();
         this._latlngs = [this.getLatLng(), L.latLng(latlng)];
+        this._angles = [this.options.rotationAngle, angle];
         this._durations = [duration];
         this._state = L.Marker.MovingMarker.notStartedState;
         this.start();
@@ -212,6 +216,7 @@ L.Marker.MovingMarker = L.Marker.extend({
         this._currentIndex = index;
         this._currentDuration = this._durations[index];
         this._currentLine = this._latlngs.slice(index, index + 2);
+        this.options.rotationAngle = this._angles[index + 1];
     },
 
     /**
@@ -241,6 +246,7 @@ L.Marker.MovingMarker = L.Marker.extend({
             // test if there is a station at the end of the line
             if (stationDuration !== undefined) {
                 if (elapsedTime < stationDuration) {
+                    this.options.rotationAngle = this._angles[lineIndex + 1];
                     this.setLatLng(this._latlngs[lineIndex + 1]);
                     return null;
                 }
@@ -256,6 +262,7 @@ L.Marker.MovingMarker = L.Marker.extend({
                     lineIndex = 0;
                     this.fire('loop', {elapsedTime: elapsedTime});
                 } else {
+                    this.options.rotationAngle = this._angles[this._latlngs.length - 1];
                     // place the marker at the end, else it would be at
                     // the last position
                     this.setLatLng(this._latlngs[this._latlngs.length - 1]);
