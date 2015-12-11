@@ -19,8 +19,8 @@ L.interpolateAngle = function(a1, a2, duration, t) {
         a2 += 360;
     }
     
-    // use ease in quad formula
-    return Math.floor(a1 + k * k * k * k * (a2 - a1)) % 360;
+    // use ease in expo formula
+    return (a2 - a1) * Math.pow(2, 10 * (k - 1)) + a1;
 };
 
 L.Marker.MovingMarker = L.Marker.extend({
