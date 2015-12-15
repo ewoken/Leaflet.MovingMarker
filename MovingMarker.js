@@ -20,7 +20,7 @@ L.interpolateAngle = function(a1, a2, duration, t) {
     }
     
     // use ease in expo formula
-    return (a2 - a1) * Math.pow(2, 10 * (k - 1)) + a1;
+    return Math.floor((a2 - a1) * Math.pow(2, 10 * (k - 1)) + a1);
 };
 
 L.Marker.MovingMarker = L.Marker.extend({
