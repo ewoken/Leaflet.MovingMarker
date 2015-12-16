@@ -12,11 +12,11 @@ L.interpolateAngle = function(a1, a2, duration, t) {
     k = (k > 1) ? 1 : k;
     
     if (a2 > a1 && a2 - a1 > 180) {
-        a1 += 360;
+        a2 = 360 - a2;
     }
 
     if (a1 > a2 && a1 - a2 > 180) {
-        a2 += 360;
+        a2 = 360 + a2;
     }
     
     // use ease in expo formula
