@@ -151,6 +151,14 @@ L.Marker.MovingMarker = L.Marker.extend({
         this.start();
         this.options.loop = false;
     },
+    
+    panTo: function(latlng, angle, duration) {
+        if (this._state === L.Marker.MovingMarker.runState && this._durations.length < 5) {
+            this.addLatLng(latlng, angle, duration);
+        } else {
+            this.moveTo(latlng, angle, duration);
+        }
+    },
 
     addStation: function(pointIndex, duration) {
         if (pointIndex > this._latlngs.length - 2 || pointIndex < 1) {
