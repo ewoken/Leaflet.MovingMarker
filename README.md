@@ -50,15 +50,13 @@ API
 
 **Factory**
 ```
-L.movingMarker(<LatLng[]> latlngs, <Number[]> durations [,<Object> options]);
+L.Marker.movingMarker(<LatLng[]> latlngs, <Number[]> durations [,<Object> options]);
 ```
+Note: As Leaftlet's other functions, it also accepts `latlngs` in a simple Array form and simple object form ([see Leaflet docs](http://leafletjs.com/reference.html#latlng)).
 
 **durations**:
 *   if array of number : duration in ms per line segment.
 *   if number : total duration (autocalculate duration in ms per line segment proportionnaly to distance between points).
-
-
-Note: As Leaftlet's other functions, it also accept them in a simple Array form and simple object form ([see Leaflet docs](http://leafletjs.com/reference.html#latlng)).
 
 **Options**
 All the marker's options are available.
