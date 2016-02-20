@@ -19,6 +19,7 @@ L.Marker.MovingMarker = L.Marker.extend({
     options: {
         autostart: false,
         loop: false,
+        onEnd: function(){}
     },
 
     initialize: function (latlngs, durations, options) {
@@ -273,6 +274,7 @@ L.Marker.MovingMarker = L.Marker.extend({
     },
 
     _animate: function(timestamp, noRequestAnim) {
+        var self = this;
         this._animRequested = false;
 
         // find the next line and compute the new elapsedTime
@@ -280,6 +282,7 @@ L.Marker.MovingMarker = L.Marker.extend({
 
         if (this.isEnded()) {
             // no need to animate
+            self.options.onEnd.apply(self, Array.prototype.slice.call(arguments));
             return;
         }
 
