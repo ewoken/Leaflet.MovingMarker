@@ -210,7 +210,7 @@ L.Marker.MovingMarker = L.Marker.extend({
 
     _loadLine: function(index) {
         if (this._currentIndex !== index) {
-            this.fire('segmentChanged', { segmentIndex: index });
+            this.fire('lineIndexChanged', { lineIndex: index });
         }
 
         this._currentIndex = index;
