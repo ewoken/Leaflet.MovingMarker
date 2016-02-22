@@ -209,6 +209,10 @@ L.Marker.MovingMarker = L.Marker.extend({
     },
 
     _loadLine: function(index) {
+        if (this._currentIndex !== index) {
+            this.fire('segmentChanged', { segmentIndex: index });
+        }
+
         this._currentIndex = index;
         this._currentDuration = this._durations[index];
         this._currentLine = this._latlngs.slice(index, index + 2);
