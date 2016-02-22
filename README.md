@@ -95,6 +95,7 @@ All the marker's options are available.
  - ```start```: fired when the marker starts
  - ``` end```: fired when the marker stops 
  - ```loop```: fired when the marker begin a new loop
+ - ```lineIndexChanged```: fired when the marker moves to a new line
 
 **Note**: Event are not synchrone because of the use of ```requestAnimationFrame```.  If you quit the tab where the animation is working, events will be fired when the tab will get back the focus. Events ```end``` and ```loop``` have the attribute ```elapsedTime``` to get the time elapsed since the real end/loop.
 
