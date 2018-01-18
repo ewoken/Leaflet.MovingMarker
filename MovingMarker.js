@@ -1,3 +1,4 @@
+const L = require('leaflet');
 L.interpolatePosition = function(p1, p2, duration, t) {
     var k = t/duration;
     k = (k > 0) ? k : 0;
@@ -37,12 +38,16 @@ L.Marker.MovingMarker = L.Marker.extend({
         this._currentDuration = 0;
         this._currentIndex = 0;
 
-        this._state = L.Marker.MovingMarker.notStartedState;
+
+        this.latlngLen = 10;//坐标记录长度
+        this.latIndex = latlngs.length;//坐标集合index
+
+        this._state = L.Marker.MovingMarker.notStartedState;//marker起始状态
         this._startTime = 0;
         this._startTimeStamp = 0;  // timestamp given by requestAnimFrame
         this._pauseStartTime = 0;
-        this._animId = 0;
-        this._animRequested = false;
+        this._animId = 0;//记录动画id
+        this._animRequested = false;//记录动画请求状态
         this._currentLine = [];
         this._stations = {};
     },
@@ -86,7 +91,7 @@ L.Marker.MovingMarker = L.Marker.extend({
         this._currentDuration -= (this._pauseStartTime - this._startTime);
         this._startAnimation();
     },
-
+    
     pause: function() {
         if (! this.isRunning()) {
             return;
@@ -116,8 +121,17 @@ L.Marker.MovingMarker = L.Marker.extend({
     },
 
     addLatLng: function(latlng, duration) {
+        if(L.latLng(latlng).equals(this._latlngs[this._latlngs.length - 1])){
+            return;
+        }
+        if (this._latlngs.length >= this.latlngLen){
+            this._latlngs.splice(0,1);
+            this._durations.splice(0,1);
+        }
         this._latlngs.push(L.latLng(latlng));
         this._durations.push(duration);
+        this.latIndex++;
+        this.resume();
     },
 
     moveTo: function(latlng, duration) {
@@ -167,7 +181,7 @@ L.Marker.MovingMarker = L.Marker.extend({
             totalDistance += distance;
         }
 
-        var ratioDuration = duration / totalDistance;
+        var ratioDuration = duration / (totalDistance || 1);
 
         var durations = [];
         for (i = 0; i < distances.length; i++) {
@@ -209,9 +223,14 @@ L.Marker.MovingMarker = L.Marker.extend({
     },
 
     _loadLine: function(index) {
+        var lngArrayIndex = index >= this.latlngLen - 2?this.latlngLen - 2:index;
         this._currentIndex = index;
-        this._currentDuration = this._durations[index];
-        this._currentLine = this._latlngs.slice(index, index + 2);
+        this._currentDuration = this._durations[lngArrayIndex];
+        this._currentLine = this._latlngs.slice(lngArrayIndex, lngArrayIndex + 2);
+        // if(!this._currentLine[0].equals(this._currentLine[1])){
+        // console.log(this._currentLine);
+
+        // }
     },
 
     /**
@@ -242,7 +261,7 @@ L.Marker.MovingMarker = L.Marker.extend({
             if (stationDuration !== undefined) {
                 if (elapsedTime < stationDuration) {
                     this.setLatLng(this._latlngs[lineIndex + 1]);
-                    return null;
+                    break;
                 }
                 elapsedTime -= stationDuration;
             }
@@ -250,7 +269,7 @@ L.Marker.MovingMarker = L.Marker.extend({
             lineIndex++;
 
             // test if we have reached the end of the polyline
-            if (lineIndex >= this._latlngs.length - 1) {
+            if (lineIndex >= this.latIndex - 1) {
 
                 if (this.options.loop) {
                     lineIndex = 0;
@@ -258,12 +277,14 @@ L.Marker.MovingMarker = L.Marker.extend({
                 } else {
                     // place the marker at the end, else it would be at
                     // the last position
-                    this.setLatLng(this._latlngs[this._latlngs.length - 1]);
-                    this.stop(elapsedTime);
-                    return null;
+                    //this.setLatLng(this._latlngs[this._latlngs.length - 1]);
+                  this.pause();
+                  //lineDuration = this._durations[lineIndex - 1] || 1000;
+                  return null;
                 }
             }
-            lineDuration = this._durations[lineIndex];
+          lineDuration = this._durations[lineIndex] || 1000;
+
         }
 
         this._loadLine(lineIndex);
