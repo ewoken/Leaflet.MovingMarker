@@ -65,8 +65,10 @@ All the marker's options are available.
 
  - ```autostart```: if ``` true``` the marker will start automatically after it is added to map. Default: ```false```
  - ``` loop```: if ```true``` the marker will start automatically at the beginning of the polyline when the it arrives at the end. Default: ```false```
-
-	
+ - ```rotation```: if ```true``` the marker will rotate in real time to the direction of polyline. Default: ```false```
+ - ```initialRotationAngle```: The initial rotation angle. Default: ```false```
+ - ```rotationOrigin```: The origin of rotation. Default: ```center```
+ 
 **Methods**
 
 *Getter*

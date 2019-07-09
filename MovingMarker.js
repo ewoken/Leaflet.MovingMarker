@@ -6,6 +6,15 @@ L.interpolatePosition = function(p1, p2, duration, t) {
         p1.lng + k * (p2.lng - p1.lng));
 };
 
+L.getAngle = function(cx, cy, ex, ey) {
+    var dy = ey - cy;
+    var dx = ex - cx;
+    var theta = Math.atan2(dy, dx); // range (-PI, PI]
+    theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
+    // if (theta < 0) theta = 360 + theta; // range [0, 360)
+    return theta;
+};
+
 L.Marker.MovingMarker = L.Marker.extend({
 
     //state constants
@@ -19,6 +28,9 @@ L.Marker.MovingMarker = L.Marker.extend({
     options: {
         autostart: false,
         loop: false,
+        rotate: false,
+        initialRotationAngle: 0,
+        rotationOrigin: "center",
     },
 
     initialize: function (latlngs, durations, options) {
@@ -208,10 +220,32 @@ L.Marker.MovingMarker = L.Marker.extend({
         this._animate(this._startTimeStamp + elapsedTime, true);
     },
 
+    _updateRotation: function() {
+        if (this._rotationAngle) {
+            this._icon.style[
+                L.DomUtil.TRANSFORM + "Origin"
+            ] = this.options.rotationOrigin;
+
+            this._icon.style[L.DomUtil.TRANSFORM] +=
+                " rotateZ(" +
+                (this.options.initialRotationAngle + this._rotationAngle) +
+                "deg)";
+        }
+    },
+
     _loadLine: function(index) {
         this._currentIndex = index;
         this._currentDuration = this._durations[index];
         this._currentLine = this._latlngs.slice(index, index + 2);
+        if(this.options.rotate){
+            // set direction
+            this._rotationAngle = L.getAngle(
+                this._currentLine[0].lat,
+                this._currentLine[0].lng,
+                this._currentLine[1].lat,
+                this._currentLine[1].lng
+            );
+        }
     },
 
     /**
@@ -290,6 +324,9 @@ L.Marker.MovingMarker = L.Marker.extend({
                 this._currentDuration,
                 elapsedTime);
             this.setLatLng(p);
+            if(this.options.rotate){
+                this._updateRotation();
+            }
         }
 
         if (! noRequestAnim) {
