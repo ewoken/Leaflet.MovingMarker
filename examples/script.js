@@ -117,3 +117,28 @@ marker5.addStation(4, 2000);
 
 L.polyline(barcelonePerpignanPauBordeauxMarseilleMonaco,
     {color: 'green'}).addTo(map);
+
+//=========================================================================
+
+var track6 = [[52.8567, 2.3508], [54.45, 22.523333], [48.54, 33.666]];
+
+var marker6 = L.Marker.movingMarker(track6, 5000, {rotate: true}).addTo(map);
+L.polyline(track6).addTo(map);
+marker6.once('click', function () {
+    marker6.start();
+    marker6.closePopup();
+    marker6.unbindPopup();
+    marker6.on('click', function() {
+        if (marker6.isRunning()) {
+            marker6.pause();
+        } else {
+            marker6.start();
+        }
+    });
+    setTimeout(function() {
+        marker1.bindPopup('<b>Click me to pause !</b>').openPopup();
+    }, 2000);
+});
+
+marker6.bindPopup('<b>Click me to start with rotate!</b>', {closeOnClick: false});
+marker6.openPopup();
